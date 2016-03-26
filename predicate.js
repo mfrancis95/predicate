@@ -2,6 +2,9 @@ function middleware(predicate, callback) {
     if (predicate instanceof RegExp) {
         predicate = regexToPredicate(predicate);
     }
+    else if (typeof predicate === "string") {
+        predicate = regexToPredicate(new RegExp(predicate));
+    }
     return (request, response, next) => {
         if (predicate(request)) {
             if (callback && callback(request)) {
